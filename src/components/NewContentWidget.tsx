@@ -35,7 +35,7 @@ export const NewContentWidget: React.FC<{
   const showLogin = !authenticated && !!addType;
 
   return (
-    <Segment id="new-content-widget">
+    <div id="new-content-widget">
       {showLogin && <Login />}
       {authenticated && (
         <>
@@ -55,7 +55,7 @@ export const NewContentWidget: React.FC<{
           )}
         </>
       )}
-      <h5>I want to post</h5>
+      {/* <h5>I want to post</h5>
       {([
         'chat',
         'request',
@@ -79,14 +79,14 @@ export const NewContentWidget: React.FC<{
         content="Place"
         onClick={() => setAddType('place')}
       />
-      <hr />
+      <hr /> */}
       <Button
         key="story"
         icon="edit outline"
         primary
-        content="Story"
+        content="New Non-Zone"
         onClick={() => setAddType('story')}
       />
-    </Segment>
+    </div>
   );
 };

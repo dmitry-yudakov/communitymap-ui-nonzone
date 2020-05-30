@@ -85,12 +85,18 @@ const initialParams: InitialAppParams | null = window.location.search
       parseNumbers: true,
       parseBooleans: true,
     }) as any)
-  : null;
+  : {};
 const embedParams: EmbedParams | null = isEmbed
   ? {
       appId: initialParams?.appId as string,
     }
   : null;
+
+// Custom
+const predefinedAppId = 'non-zone';
+initialParams!.autolocate = true;
+initialParams!.filterOrigin = predefinedAppId;
+initialParams!.theme = 'dark';
 
 const MapObjectRender: React.FC<{
   item: ObjectItem;
@@ -206,9 +212,7 @@ const Home: React.FC = () => {
       {initialParams?.canAdd !== false && (
         <NewContentWidget
           authenticated={!!user}
-          onAdd={(item) =>
-            postObject(user, mapParams, item, embedParams?.appId)
-          }
+          onAdd={(item) => postObject(user, mapParams, item, predefinedAppId)}
         />
       )}
       <ProfileWidget />
