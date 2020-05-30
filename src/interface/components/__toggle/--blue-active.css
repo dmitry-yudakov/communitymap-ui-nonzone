@@ -1,0 +1,17 @@
+.toggle--blue-active {
+    border: 3px solid #52C1E0;
+    color: white;
+    background-color: #52C1E0;
+}
+
+.toggle--blue-active:hover {
+    border: 3px solid rgb(76, 182, 211);
+    color: white;
+    background-color: rgb(76, 182, 211);
+}
+
+.toggle--blue-active:active {
+    border: 3px solid rgb(72, 173, 201);
+    color: white;
+    background-color: rgb(72, 173, 201);
+}

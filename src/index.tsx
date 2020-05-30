@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+// import App from './App';
+import App from './interface/App.js';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   // <React.StrictMode>
   <App />,
   // </React.StrictMode>
+
+  // Interface by Sergey
+
   document.getElementById('root')
 );
 

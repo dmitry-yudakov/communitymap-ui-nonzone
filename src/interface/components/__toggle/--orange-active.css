@@ -1,0 +1,17 @@
+.toggle--orange-active {
+    border: 3px solid #FA7921;
+    color: white;
+    background-color: #FA7921;
+}
+
+.toggle--orange-active:hover {
+    border: 3px solid #E46D1E;
+    color: white;
+    background-color: #E46D1E;
+}
+
+.toggle--orange-active:hover {
+    border: 3px solid #D1641B;
+    color: white;
+    background-color: #D1641B;
+}
