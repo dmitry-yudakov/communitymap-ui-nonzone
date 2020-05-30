@@ -49,16 +49,16 @@ import { StoryItem } from './components/Story';
 import { detectLocation } from './utils';
 
 const initFirebase = async () => {
-  if (process.env.NODE_ENV === 'production') {
-    return fetch('/__/firebase/init.json').then(async (response) => {
-      console.debug('Init firebase with default project config');
-      firebase.initializeApp(await response.json());
-    });
-  } else {
-    const { firebaseConfig } = require('./firebaseConfig');
-    console.debug('Init firebase with local config', firebaseConfig);
-    firebase.initializeApp(firebaseConfig);
-  }
+  // if (process.env.NODE_ENV === 'production') {
+  //   return fetch('/__/firebase/init.json').then(async (response) => {
+  //     console.debug('Init firebase with default project config');
+  //     firebase.initializeApp(await response.json());
+  //   });
+  // } else {
+  const { firebaseConfig } = require('./firebaseConfig');
+  console.debug('Init firebase with local config', firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
+  // }
 };
 
 const FirebaseInitializer: React.FC = ({ children }) => {

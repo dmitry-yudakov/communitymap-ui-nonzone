@@ -5,8 +5,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "yarn build && firebase deploy",
-    "deploy_hosting": "yarn build && firebase deploy --only hosting:communitymap",
+    "deploy": "yarn build && firebase deploy --only hosting",
+    "deploy_hosting": "yarn build && firebase deploy --only hosting",
     "index_sync": "firebase firestore:indexes > firestore.indexes.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
