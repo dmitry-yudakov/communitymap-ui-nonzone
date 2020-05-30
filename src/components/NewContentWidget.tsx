@@ -84,7 +84,7 @@ export const NewContentWidget: React.FC<{
         key="story"
         icon="edit outline"
         primary
-        content="New Non-Zone"
+        content="New"
         onClick={() => setAddType('story')}
       />
     </div>
