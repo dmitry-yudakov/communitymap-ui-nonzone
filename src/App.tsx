@@ -250,13 +250,13 @@ const Home: React.FC = () => {
           votesObj &&
           objects.map((it) => (
             <MapItem key={it.id} lat={it.loc.latitude} lng={it.loc.longitude}>
-              <PointingSegment>
-                <MapObjectRender
-                  item={it}
-                  votesInfo={votesObj[it.id]}
-                  comments={commentsObj[it.id]}
-                />
-              </PointingSegment>
+              {/* <PointingSegment> */}
+              <MapObjectRender
+                item={it}
+                votesInfo={votesObj[it.id]}
+                comments={commentsObj[it.id]}
+              />
+              {/* </PointingSegment> */}
             </MapItem>
           ))}
       </Maps>

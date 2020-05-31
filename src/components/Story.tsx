@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Button, Icon, Form } from 'semantic-ui-react';
-import { ObjectItemInput, ObjectItemComponentProps } from '../types';
+import { ObjectItemInput, ObjectItemComponentProps, Location } from '../types';
 import { reportError, uploadToCloudinary } from '../utils';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,12 @@ import { LikeWidget } from './LikeWidget';
 import { FullScreenContainer } from './FullScreenContainer';
 import { TakePicture } from './TakePicture';
 import NonCart from '../interface/noncart';
+import Point from '../interface/point';
+
+const coords2str = (loc: Location) =>
+  loc.latitude.toString().substr(0, 5) +
+  ', ' +
+  loc.longitude.toString().substr(0, 5);
 
 export const StoryItem: React.FC<
   ObjectItemComponentProps & { onBack?: () => void }
@@ -56,72 +62,75 @@ export const StoryItem: React.FC<
     );
   }
   return (
-    <div
-      className={cx({ item: true, 'story-item': true, expanded })}
-      onClick={onClick}
-    >
-      {expanded && !!logoURL && <img style={{ height: 250 }} src={logoURL} />}
-      <div className="title">
-        <Icon name={icon} />
-        {title}
-      </div>
-      {expanded && (
-        <div className="author-created">
-          <Link to={`/users/${author}`}>{authorInfo?.name || 'Anonymous'}</Link>{' '}
-          on {new Date(created).toLocaleString()}
-        </div>
-      )}
-      <br />
-      {expanded && description !== title && (
-        <section className="description">{description}</section>
-      )}
-      {!!commentsCount && (
-        <div className="replies-count">{commentsCount} replies</div>
-      )}
-      <div className="actions">
-        <LikeWidget votes={votes} userVoted={userVoted} onVote={onVote} />
-
-        <div>
-          {expanded && user?.uid === author && (
-            <Button
-              icon="close"
-              content="Delete"
-              basic
-              onClick={() => {
-                if (window.confirm('Are you sure you want to close it?'))
-                  onClose().catch(reportError);
-              }}
-            />
-          )}
-          {!showCommentsWidget && !expanded && (
-            <Button
-              basic
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowCommentsWidget(true);
-              }}
-            >
-              Reply
-            </Button>
-          )}
-        </div>
-      </div>
-      {expanded && !!commentsCount && (
-        <section>
-          <h4 className="pale-heading">Replies</h4>
-          <CommentsList comments={sortedComments!} />
-        </section>
-      )}
-      {(showCommentsWidget || expanded) &&
-        (!!user ? (
-          <PostCommentWidget onComment={onComment} />
-        ) : (
-          <div style={{ textAlign: 'center' }}>
-            You need to register or sign in to be able to post
-          </div>
-        ))}
-    </div>
+    <Point name={item.title} coords={coords2str(item.loc)} onClick={onClick} />
   );
+  // return (
+  //   <div
+  //     className={cx({ item: true, 'story-item': true, expanded })}
+  //     onClick={onClick}
+  //   >
+  //     {expanded && !!logoURL && <img style={{ height: 250 }} src={logoURL} />}
+  //     <div className="title">
+  //       <Icon name={icon} />
+  //       {title}
+  //     </div>
+  //     {expanded && (
+  //       <div className="author-created">
+  //         <Link to={`/users/${author}`}>{authorInfo?.name || 'Anonymous'}</Link>{' '}
+  //         on {new Date(created).toLocaleString()}
+  //       </div>
+  //     )}
+  //     <br />
+  //     {expanded && description !== title && (
+  //       <section className="description">{description}</section>
+  //     )}
+  //     {!!commentsCount && (
+  //       <div className="replies-count">{commentsCount} replies</div>
+  //     )}
+  //     <div className="actions">
+  //       <LikeWidget votes={votes} userVoted={userVoted} onVote={onVote} />
+
+  //       <div>
+  //         {expanded && user?.uid === author && (
+  //           <Button
+  //             icon="close"
+  //             content="Delete"
+  //             basic
+  //             onClick={() => {
+  //               if (window.confirm('Are you sure you want to close it?'))
+  //                 onClose().catch(reportError);
+  //             }}
+  //           />
+  //         )}
+  //         {!showCommentsWidget && !expanded && (
+  //           <Button
+  //             basic
+  //             onClick={(e) => {
+  //               e.stopPropagation();
+  //               setShowCommentsWidget(true);
+  //             }}
+  //           >
+  //             Reply
+  //           </Button>
+  //         )}
+  //       </div>
+  //     </div>
+  //     {expanded && !!commentsCount && (
+  //       <section>
+  //         <h4 className="pale-heading">Replies</h4>
+  //         <CommentsList comments={sortedComments!} />
+  //       </section>
+  //     )}
+  //     {(showCommentsWidget || expanded) &&
+  //       (!!user ? (
+  //         <PostCommentWidget onComment={onComment} />
+  //       ) : (
+  //         <div style={{ textAlign: 'center' }}>
+  //           You need to register or sign in to be able to post
+  //         </div>
+  //       ))}
+  //   </div>
+  // );
 };
 
 const { REACT_APP_CLOUDINARY_CLOUD_NAME } = process.env;
@@ -140,23 +149,23 @@ export const AddNewStoryObject: React.FC<{
     setState({ ...state, [name]: value });
   };
 
-  if (!state.logoURL)
-    return (
-      <FullScreenContainer>
-        <TakePicture
-          // onClose={() => setTakePicture(false)}
-          onClose={onClose}
-          onPictureTaken={async (image) => {
-            // console.log('image', image);
-            const info = await uploadImage(image);
-            console.log('returned info', info);
-            setState({ ...state, logoURL: info.url });
-            // setTakePicture(false);
-            // setAddType('story');
-          }}
-        />
-      </FullScreenContainer>
-    );
+  // if (!state.logoURL)
+  //   return (
+  //     <FullScreenContainer>
+  //       <TakePicture
+  //         // onClose={() => setTakePicture(false)}
+  //         onClose={onClose}
+  //         onPictureTaken={async (image) => {
+  //           // console.log('image', image);
+  //           const info = await uploadImage(image);
+  //           console.log('returned info', info);
+  //           setState({ ...state, logoURL: info.url });
+  //           // setTakePicture(false);
+  //           // setAddType('story');
+  //         }}
+  //       />
+  //     </FullScreenContainer>
+  //   );
 
   return (
     <div className="add-new-story">
