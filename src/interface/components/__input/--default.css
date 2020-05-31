@@ -3,15 +3,15 @@
     width: 100%;
 }
 
-.input--orange {
+.input--default {
     height: 47px;
     width: 100%;
     padding: 10px;
-    background: #FFFFFF;
-    border: 1px solid #E9E9E9;
+    background: rgb(65, 65, 65);
+    border: 1px solid rgb(0, 0, 0);
     border-radius: 3px;
 
-    color: #494949;
+    color: rgb(255, 255, 255);
     font-size: 16px;
     font-weight: thin;
 
@@ -20,18 +20,18 @@
     box-sizing: border-box;
 }
 
-.input--orange:hover {
+.input--default:hover {
     border: 3px solid #CACACA;
 }
 
-.input--orange:focus {
-    border: 3px solid #FA7921;
+.input--default:focus {
+    border: 3px solid #52AA91;
 }
 
 .input__tip {
     margin-bottom: 10px;
-    color: #222222;
+    color: #52AA91;
     font-size: 13px;
     font-weight: 600;
-    opacity: 0.5;
+    opacity: 1;
 }

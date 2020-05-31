@@ -1,5 +1,5 @@
-import React from "react";
-import "./--orange.css";
+import React from 'react';
+import './--default.css';
 
 /**
  * This component represents a Button
@@ -16,47 +16,54 @@ import "./--orange.css";
  */
 
 export class Input extends React.Component {
-    constructor(props) {
-        super(props);
-        this.styles = {
-            orange: "input--orange",
-            blue: "input--blue",
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.styles = {
+      default: 'input--default',
+    };
+  }
 
-    handleChange = (e) => {
-        this.props.func(e.target.value);
-    }
+  handleChange = (e) => {
+    this.props.func(e.target.value);
+  };
 
-    render() {
-        return (
-            <div
-                className={
-                    "input__box " + this.props.classBox
-                        ? this.props.classBox
-                        : ""
-                }
-            >
-                {this.props.name ? (
-                    <p className="input__tip">{this.props.name}</p>
-                ) : (
-                    ""
-                )}
-                <input
-                    className={
-                        this.styles[
-                            this.props.style
-                                ? this.props.style
-                                : "orange"
-                        ] + (this.props.class ? this.props.class : "")
-                    }
-                    onChange={
-                        this.props.func ? this.handleChange : ""
-                    }
-                >
-                    {this.props.children}
-                </input>
-            </div>
-        );
-    }
+  render() {
+    return this.props.type === 'textarea' ? (
+      <div
+        className={
+          'input__box ' + this.props.classBox ? this.props.classBox : ''
+        }
+      >
+        {this.props.name ? <p className="input__tip">{this.props.name}</p> : ''}
+        <textarea
+          className={
+            this.styles[this.props.style ? this.props.style : 'default'] +
+            ' ' +
+            (this.props.class ? this.props.class : '')
+          }
+          onChange={this.props.func ? this.handleChange : ''}
+        >
+          {this.props.children}
+        </textarea>
+      </div>
+    ) : (
+      <div
+        className={
+          'input__box ' + this.props.classBox ? this.props.classBox : ''
+        }
+      >
+        {this.props.name ? <p className="input__tip">{this.props.name}</p> : ''}
+        <input
+          className={
+            this.styles[this.props.style ? this.props.style : 'default'] +
+            ' ' +
+            (this.props.class ? this.props.class : '')
+          }
+          onChange={this.props.func ? this.handleChange : ''}
+        >
+          {this.props.children}
+        </input>
+      </div>
+    );
+  }
 }

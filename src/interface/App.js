@@ -1,25 +1,21 @@
 import React from 'react';
 import { Button } from './components/library';
+import NonCreate from './nonCreate.js';
 import NonCart from './noncart.js';
-import TakePicture from './takepicture.js'
+import TakePicture from './takepicture.js';
 import './style/App.css';
 class App extends React.Component {
   render() {
     return (
       <div className="app">
-        {/* <NonCart
-          name="Great story"
-          description={
-            "I think these are interesting mechanisms for on one side making the non-zone experience more meaningful / special - and on the other side for us to monetize the platform in a fair way (basically is the same model of a Cloud Hosting platform - just, we 'host' non-zones, allowing users to create 'space')"
-          }
+        <NonCreate
           link={
-            'https://avatars3.githubusercontent.com/u/44585564?s=460&u=769e7555c640fc32a06b174df9c40cfaa5d23eb8&v=4'
-		  }
-		  data={"12.12.2020"}
-		  author={"Sergey Rudenko"}
-        /> */}
-        
-		<TakePicture />
+            'https://leonardo.osnova.io/570cc994-bf84-0485-b393-0b92245a8158/-/resize/1200/'
+          }
+          func={(formOutput) => console.log(formOutput)}
+        />
+
+        <TakePicture />
 
         <Button
           class={'app__login app__button--svg'}
