@@ -1,11 +1,11 @@
 body {
-    height: 100vh;
-    width: 100vw;
-    margin: 0px;
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
 }
 
 * {
-    outline: none;
+  outline: none;
 }
 
 h1,
@@ -18,56 +18,54 @@ p,
 a,
 li,
 ul {
-    margin: 0px;
-    color: #3f3f3f;
-    font-family: "Roboto", sans-serif;
+  margin: 0px;
+  color: #3f3f3f;
+  font-family: 'Roboto', sans-serif;
 }
 
 .app {
-    height: 100vh;
-    width: 100vw;
+  height: 100vh;
+  width: 100vw;
 }
 
 .app__map {
-    height: 100%;
-    width: 100%;
-    background-image: url(./media/template.png);
+  height: 100%;
+  width: 100%;
+  background-image: url(./media/template.png);
 }
 
 .app__login {
-    position: fixed;
-    width: 115px;
-	margin: 10px;
-	border: 3px solid rgb(190, 24, 212);
+  position: fixed;
+  width: 115px;
+  margin: 10px;
+  border: 3px solid rgb(190, 24, 212);
 }
 
 .app__login:hover {
-    background-color: rgb(190, 24, 212);
+  background-color: rgb(190, 24, 212);
 }
 
-
-
 .app__buttons {
-    position: fixed;
-    bottom: 0px;
+  position: fixed;
+  bottom: 0px;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .app__button {
-    margin: 0px 10px 10px 10px;
+  margin: 0px 10px 10px 10px;
 }
 
-.app__button--circle {
-    height: 50px;
-    width: 50px;
-    padding: 0px;
+.app__button.app__button--circle {
+  height: 50px;
+  width: 50px;
+  padding: 0px;
 
-    border-radius: 50%;
-    justify-content: center;
+  border-radius: 50%;
+  justify-content: center;
 }
 
 .app__button--svg svg {
-    margin-right: 5px;
+  margin-right: 5px;
 }
