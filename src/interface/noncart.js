@@ -20,7 +20,7 @@ export default class NonCart extends React.Component {
           <p className="position__author">{this.props.author}</p>
           <p className="position__data">{this.props.data}</p>
         </div>
-		<Button class={"position__button"} func={()=>console.log("Закрыть окошко")} >Close the cart</Button>
+        <Button class={"position__button"} func={this.props.onClose} >Close the cart</Button>
       </div>
     );
   }

@@ -4,16 +4,18 @@ import { Button } from './components/library';
 
 export default class TakePicture extends React.Component {
   render() {
+    const { onChange } = this.props
     return (
       <div className="takepicture">
         <input
           type="file"
           className="takepicture__input"
+          onChange={e => onChange(e.target.files[0])}
         ></input>
         <Button
           class={'takepicture__button'}
-		  func={() => console.log('it works')}
-		  
+          func={() => console.log('it works')}
+
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

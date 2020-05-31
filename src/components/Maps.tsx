@@ -33,6 +33,8 @@ const getProps = (theme: string) => {
     streetViewControl: false,
     rotateControl: true,
     mapTypeControl: false,
+    zoomControl: false,
+    fullscreenControl: false,
     styles,
   };
   return {
@@ -46,6 +48,7 @@ const getProps = (theme: string) => {
 interface MapsProps {
   centerLat?: number;
   centerLng?: number;
+  zoom?: number;
   theme?: string;
   onChange: (
     centerLat: number,
@@ -61,6 +64,7 @@ export const Maps: React.FC<MapsProps> = ({
   children,
   centerLat,
   centerLng,
+  zoom,
   theme = 'standard',
   onChange,
 }) => {
@@ -78,6 +82,7 @@ export const Maps: React.FC<MapsProps> = ({
         {...props}
         bootstrapURLKeys={{ key: GOOGLE_API_KEY }}
         center={center}
+        zoom={zoom}
         onChange={(props) => {
           const {
             center,

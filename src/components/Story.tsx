@@ -11,9 +11,11 @@ import cx from 'classnames';
 import { LikeWidget } from './LikeWidget';
 import { FullScreenContainer } from './FullScreenContainer';
 import { TakePicture } from './TakePicture';
-import { stat } from 'fs';
+import NonCart from '../interface/noncart';
 
-export const StoryItem: React.FC<ObjectItemComponentProps> = ({
+export const StoryItem: React.FC<
+  ObjectItemComponentProps & { onBack?: () => void }
+> = ({
   item,
   user,
   userVoted,
@@ -24,6 +26,7 @@ export const StoryItem: React.FC<ObjectItemComponentProps> = ({
   onVote,
   onComment,
   onClose,
+  onBack,
 }) => {
   const { author, title, description, created, logoURL } = item;
 
@@ -40,6 +43,18 @@ export const StoryItem: React.FC<ObjectItemComponentProps> = ({
 
   const icon = 'edit outline';
 
+  if (expanded) {
+    return (
+      <NonCart
+        name={title}
+        description={description}
+        link={logoURL}
+        data={created}
+        author={authorInfo?.name}
+        onClose={onBack}
+      />
+    );
+  }
   return (
     <div
       className={cx({ item: true, 'story-item': true, expanded })}

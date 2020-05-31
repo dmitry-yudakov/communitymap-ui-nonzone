@@ -9,6 +9,7 @@ import {
 import 'semantic-ui-css/semantic.min.css';
 import queryString from 'query-string';
 import './App.css';
+import './interface/style/App.css';
 import {
   MapParams,
   ObjectItem,
@@ -133,7 +134,7 @@ const MapObjectRender: React.FC<{
   );
 };
 
-const DetailedObjectRender: React.FC = () => {
+const DetailedObjectRender: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const user = useAuth() || null;
   const { objectId = 'n/a' } = useParams();
 
@@ -142,18 +143,19 @@ const DetailedObjectRender: React.FC = () => {
   if (object === undefined) return <Loader active />;
   if (object === null) return <div>Object not found :(</div>;
 
-  let RealComponent: React.FC<ObjectItemComponentProps>;
+  let RealComponent = StoryItem;
+  // let RealComponent: React.FC<ObjectItemComponentProps>;
 
-  switch (object.type) {
-    case 'place':
-      RealComponent = Place;
-      break;
-    case 'story':
-      RealComponent = StoryItem;
-      break;
-    default:
-      RealComponent = ChatItem;
-  }
+  // switch (object.type) {
+  //   case 'place':
+  //     RealComponent = Place;
+  //     break;
+  //   case 'story':
+  //     RealComponent = StoryItem;
+  //     break;
+  //   default:
+  //     RealComponent = ChatItem;
+  // }
 
   return (
     <RealComponent
@@ -166,6 +168,7 @@ const DetailedObjectRender: React.FC = () => {
       onComment={async (comment) => leaveComment(user, object, comment)}
       onVote={async () => voteUp(user, object)}
       onClose={async () => closeObject(user, object)}
+      onBack={onBack}
     />
   );
 };
@@ -173,6 +176,7 @@ const DetailedObjectRender: React.FC = () => {
 const Home: React.FC = () => {
   const user = useAuth() || null;
   const [mapParams, setMapParams] = useState<MapParams | null>(null);
+  const [zoom, setZoom] = useState(18);
 
   const setMapCenter = useCallback(
     (lat: number, lng: number) => {
@@ -221,11 +225,16 @@ const Home: React.FC = () => {
           console.debug('located', lat, lng);
           setMapCenter(lat, lng);
         }}
+        onChangeZoom={(diff) => {
+          console.log('zoom change', diff);
+          setZoom((zoom) => zoom + diff);
+        }}
       />
       <Maps
         theme={initialParams?.theme}
         centerLat={mapParams?.centerLat || initialParams?.centerLat}
         centerLng={mapParams?.centerLng || initialParams?.centerLng}
+        zoom={zoom}
         onChange={(centerLat, centerLng, minLat, maxLat, minLng, maxLng) =>
           setMapParams({
             centerLat,
@@ -253,11 +262,13 @@ const Home: React.FC = () => {
       </Maps>
       <Switch>
         <Route path="/object/:objectId">
-          <Modal open closeIcon size="tiny" onClose={() => router.push('/')}>
-            <Modal.Content scrolling>
-              <DetailedObjectRender />
-            </Modal.Content>
-          </Modal>
+          {/* <Modal open closeIcon size="tiny" onClose={() => router.push('/')}>
+            <Modal.Content scrolling> */}
+          <div className="non-zone-wrapper">
+            <DetailedObjectRender onBack={() => router.push('/')} />
+          </div>
+          {/* </Modal.Content>
+          </Modal> */}
         </Route>
         <Route path="/users/:userId">
           <Modal open closeIcon size="tiny" onClose={() => router.push('/')}>
