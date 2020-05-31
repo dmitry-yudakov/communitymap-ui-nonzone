@@ -25,3 +25,14 @@ export const detectLocation = (): Promise<Coordinates> => {
     );
   });
 };
+
+export const uploadToCloudinary = (cloudName: string, image: string) => {
+  const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+  var data = new FormData();
+  data.append('file', image);
+  data.append('upload_preset', 'gallery_preset');
+  return fetch(url, {
+    method: 'POST',
+    body: data,
+  }).then((res) => res.json());
+};
