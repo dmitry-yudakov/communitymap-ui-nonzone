@@ -308,7 +308,7 @@ function App() {
 
   const [splash, setSplash] = useState(!isEmbed ? true : false);
   useEffect(() => {
-    setTimeout(() => setSplash(false), 2000);
+    setTimeout(() => setSplash(false), 3000);
   }, []);
 
   if (isEmbed) {

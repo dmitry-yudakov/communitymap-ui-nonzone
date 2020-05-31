@@ -52,4 +52,5 @@ section {
 
 .modal .close.icon {
   top: -0.5em !important;
+  right: 0 !important;
 }
