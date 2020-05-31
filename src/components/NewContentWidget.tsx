@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'semantic-ui-react';
+// import { Button, Modal } from 'semantic-ui-react';
 import { ObjectItemInput } from '../types';
 import { AddNewChatObject } from './Chat';
 import { Login } from './Login';
@@ -8,6 +8,7 @@ import { reportError, uploadToCloudinary } from '../utils';
 import { AddNewPlaceObject } from './Place';
 import { AddNewStoryObject } from './Story';
 import './NewContentWidget.css';
+import { Button } from '../interface/components/library';
 // import { TakePicture } from './TakePicture';
 // import { FullScreenContainer } from './FullScreenContainer';
 
@@ -103,14 +104,30 @@ export const NewContentWidget: React.FC<{
         onClick={() => setAddType('place')}
       />
       <hr /> */}
-      <Button
+      {/* <Button
         key="story"
         icon="edit outline"
         primary
         content="New"
         onClick={() => setAddType('story')}
         // onClick={() => setTakePicture(true)}
-      />
+      /> */}
+      <Button
+        class={'app__button app__button--svg'}
+        func={() => setAddType('story')}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="white"
+          width="18px"
+          height="18px"
+        >
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+        </svg>
+        New
+      </Button>
     </div>
   );
 };
