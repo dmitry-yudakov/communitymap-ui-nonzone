@@ -8,12 +8,12 @@ export default class TakePicture extends React.Component {
       <div className="takepicture">
         <input
           type="file"
-          accept="image/jpeg,image/png"
           className="takepicture__input"
         ></input>
         <Button
           class={'takepicture__button'}
-          func={() => console.log('it works')}
+		  func={() => console.log('it works')}
+		  
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
