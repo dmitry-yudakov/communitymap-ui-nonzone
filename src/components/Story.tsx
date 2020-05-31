@@ -10,9 +10,11 @@ import './Story.css';
 import cx from 'classnames';
 import { LikeWidget } from './LikeWidget';
 import { FullScreenContainer } from './FullScreenContainer';
-import { TakePicture } from './TakePicture';
+
 import NonCart from '../interface/noncart';
 import Point from '../interface/point';
+import NonCreate from '../interface/nonCreate';
+import TakePicture from '../interface/takepicture';
 
 const coords2str = (loc: Location) =>
   loc.latitude.toString().substr(0, 5) +
@@ -149,6 +151,28 @@ export const AddNewStoryObject: React.FC<{
     setState({ ...state, [name]: value });
   };
 
+  if (!state.logoURL)
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+          height: 100,
+        }}
+      >
+        <TakePicture
+          onChange={async (image: any) => {
+            // console.log('image', image);
+            const info = await uploadImage(image);
+            console.log('returned info', info);
+            setState({ ...state, logoURL: info.url });
+            // setTakePicture(false);
+            // setAddType('story');
+          }}
+        />
+      </div>
+    );
   // if (!state.logoURL)
   //   return (
   //     <FullScreenContainer>
@@ -166,6 +190,28 @@ export const AddNewStoryObject: React.FC<{
   //       />
   //     </FullScreenContainer>
   //   );
+
+  return (
+    <NonCreate
+      // link={
+      //   'https://leonardo.osnova.io/570cc994-bf84-0485-b393-0b92245a8158/-/resize/1200/'
+      // }
+      // func={(formOutput: any) => console.log(formOutput)}
+      link={state.logoURL}
+      onChange={(newState: any) => setState({ ...state, ...newState })}
+      onCreate={() => {
+        const { title = '', description = '', logoURL = null } = state;
+
+        onPost({
+          type,
+          title,
+          description,
+          logoURL,
+          valid_until: '2100-01-01', // dayjs().add(valid_until, 'minute').toISOString(),
+        });
+      }}
+    />
+  );
 
   return (
     <div className="add-new-story">

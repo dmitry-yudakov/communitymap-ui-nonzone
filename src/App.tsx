@@ -264,9 +264,19 @@ const Home: React.FC = () => {
         <Route path="/object/:objectId">
           {/* <Modal open closeIcon size="tiny" onClose={() => router.push('/')}>
             <Modal.Content scrolling> */}
-          <div className="non-zone-wrapper">
-            <DetailedObjectRender onBack={() => router.push('/')} />
-          </div>
+          {/* <div className="non-zone-wrapper"> */}
+          <Modal
+            open
+            closeIcon
+            basic
+            // size="tiny"
+            onClose={() => router.push('/')}
+          >
+            <Modal.Content scrolling={false}>
+              <DetailedObjectRender onBack={() => router.push('/')} />
+            </Modal.Content>
+          </Modal>
+          {/* </div> */}
           {/* </Modal.Content>
           </Modal> */}
         </Route>

@@ -9,6 +9,7 @@ import { AddNewPlaceObject } from './Place';
 import { AddNewStoryObject } from './Story';
 import './NewContentWidget.css';
 import { Button } from '../interface/components/library';
+import { Modal } from 'semantic-ui-react';
 // import { TakePicture } from './TakePicture';
 // import { FullScreenContainer } from './FullScreenContainer';
 
@@ -63,19 +64,25 @@ export const NewContentWidget: React.FC<{
           )} */}
 
           {!!addType && (
-            // <Modal open size="tiny" closeIcon onClose={() => setAddType(null)}>
-            // <Modal.Content>
-            <AddNewObjectRender
-              type={addType}
+            <Modal
+              basic
+              open
+              size="tiny"
+              closeIcon
               onClose={() => setAddType(null)}
-              onAdd={(it) =>
-                onAdd(it)
-                  .then(() => setAddType(null))
-                  .catch(reportError)
-              }
-            />
-            // </Modal.Content>
-            // </Modal>
+            >
+              <Modal.Content>
+                <AddNewObjectRender
+                  type={addType}
+                  onClose={() => setAddType(null)}
+                  onAdd={(it) =>
+                    onAdd(it)
+                      .then(() => setAddType(null))
+                      .catch(reportError)
+                  }
+                />
+              </Modal.Content>
+            </Modal>
           )}
         </>
       )}
