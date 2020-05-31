@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
-import { Button, Segment, Modal } from 'semantic-ui-react';
+import { Button, Modal } from 'semantic-ui-react';
 import { ObjectItemInput } from '../types';
-import { AddNewChatObject, type2icon, type2title } from './Chat';
+import { AddNewChatObject } from './Chat';
 import { Login } from './Login';
 import 'firebase/auth';
-import { reportError } from '../utils';
+import { reportError, uploadToCloudinary } from '../utils';
 import { AddNewPlaceObject } from './Place';
 import { AddNewStoryObject } from './Story';
 import './NewContentWidget.css';
+// import { TakePicture } from './TakePicture';
+// import { FullScreenContainer } from './FullScreenContainer';
 
 const AddNewObjectRender: React.FC<{
   type: ObjectItemInput['type'];
   onAdd: (item: ObjectItemInput) => Promise<any>;
-}> = ({ type, onAdd }) => {
+  onClose: () => void;
+}> = ({ type, onAdd, onClose }) => {
   switch (type) {
     case 'place':
       return <AddNewPlaceObject type={type} onPost={onAdd} />;
     case 'story':
-      return <AddNewStoryObject type={type} onPost={onAdd} />;
+      return <AddNewStoryObject type={type} onPost={onAdd} onClose={onClose} />;
     case 'chat':
     case 'request':
     case 'offer':
@@ -26,11 +29,16 @@ const AddNewObjectRender: React.FC<{
   }
 };
 
+// const { REACT_APP_CLOUDINARY_CLOUD_NAME } = process.env;
+// const uploadImage = (image: string) =>
+//   uploadToCloudinary(REACT_APP_CLOUDINARY_CLOUD_NAME!, image);
+
 export const NewContentWidget: React.FC<{
   authenticated: boolean;
   onAdd: (item: ObjectItemInput) => Promise<any>;
 }> = ({ authenticated, onAdd }) => {
   const [addType, setAddType] = useState<ObjectItemInput['type'] | null>(null);
+  // const [takePicture, setTakePicture] = useState(false);
 
   const showLogin = !authenticated && !!addType;
 
@@ -39,19 +47,34 @@ export const NewContentWidget: React.FC<{
       {showLogin && <Login />}
       {authenticated && (
         <>
+          {/* {takePicture && (
+            <FullScreenContainer>
+              <TakePicture
+                onClose={() => setTakePicture(false)}
+                onPictureTaken={async (image) => {
+                  console.log('image', image);
+                  await uploadImage(image);
+                  setTakePicture(false);
+                  setAddType('story');
+                }}
+              />
+            </FullScreenContainer>
+          )} */}
+
           {!!addType && (
-            <Modal open size="tiny" closeIcon onClose={() => setAddType(null)}>
-              <Modal.Content>
-                <AddNewObjectRender
-                  type={addType}
-                  onAdd={(it) =>
-                    onAdd(it)
-                      .then(() => setAddType(null))
-                      .catch(reportError)
-                  }
-                />
-              </Modal.Content>
-            </Modal>
+            // <Modal open size="tiny" closeIcon onClose={() => setAddType(null)}>
+            // <Modal.Content>
+            <AddNewObjectRender
+              type={addType}
+              onClose={() => setAddType(null)}
+              onAdd={(it) =>
+                onAdd(it)
+                  .then(() => setAddType(null))
+                  .catch(reportError)
+              }
+            />
+            // </Modal.Content>
+            // </Modal>
           )}
         </>
       )}
@@ -86,6 +109,7 @@ export const NewContentWidget: React.FC<{
         primary
         content="New"
         onClick={() => setAddType('story')}
+        // onClick={() => setTakePicture(true)}
       />
     </div>
   );

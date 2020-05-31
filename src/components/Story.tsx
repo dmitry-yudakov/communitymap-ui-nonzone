@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Button, Icon, Form } from 'semantic-ui-react';
 import { ObjectItemInput, ObjectItemComponentProps } from '../types';
-import { reportError } from '../utils';
+import { reportError, uploadToCloudinary } from '../utils';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { useUserPublicInfo } from '../DB';
@@ -9,6 +9,9 @@ import { CommentsList, PostCommentWidget } from './Comments';
 import './Story.css';
 import cx from 'classnames';
 import { LikeWidget } from './LikeWidget';
+import { FullScreenContainer } from './FullScreenContainer';
+import { TakePicture } from './TakePicture';
+import { stat } from 'fs';
 
 export const StoryItem: React.FC<ObjectItemComponentProps> = ({
   item,
@@ -22,7 +25,7 @@ export const StoryItem: React.FC<ObjectItemComponentProps> = ({
   onComment,
   onClose,
 }) => {
-  const { author, title, description, created } = item;
+  const { author, title, description, created, logoURL } = item;
 
   const authorInfo = useUserPublicInfo(author, true);
 
@@ -42,6 +45,7 @@ export const StoryItem: React.FC<ObjectItemComponentProps> = ({
       className={cx({ item: true, 'story-item': true, expanded })}
       onClick={onClick}
     >
+      {expanded && !!logoURL && <img style={{ height: 250 }} src={logoURL} />}
       <div className="title">
         <Icon name={icon} />
         {title}
@@ -105,32 +109,58 @@ export const StoryItem: React.FC<ObjectItemComponentProps> = ({
   );
 };
 
+const { REACT_APP_CLOUDINARY_CLOUD_NAME } = process.env;
+const uploadImage = (image: string) =>
+  uploadToCloudinary(REACT_APP_CLOUDINARY_CLOUD_NAME!, image);
+
 export const AddNewStoryObject: React.FC<{
   type: ObjectItemInput['type'];
   onPost: (data: ObjectItemInput) => void;
-}> = ({ type, onPost }) => {
+  onClose: () => void;
+}> = ({ type, onPost, onClose }) => {
   const [state, setState] = useState({ valid_until: 12 * 60 } as any);
   const onChange = (e: any) => {
     const { name, value } = e.target;
     console.debug(e.target.name, e.target.value);
     setState({ ...state, [name]: value });
   };
+
+  if (!state.logoURL)
+    return (
+      <FullScreenContainer>
+        <TakePicture
+          // onClose={() => setTakePicture(false)}
+          onClose={onClose}
+          onPictureTaken={async (image) => {
+            // console.log('image', image);
+            const info = await uploadImage(image);
+            console.log('returned info', info);
+            setState({ ...state, logoURL: info.url });
+            // setTakePicture(false);
+            // setAddType('story');
+          }}
+        />
+      </FullScreenContainer>
+    );
+
   return (
     <div className="add-new-story">
       <h4>
         <Icon name="edit outline" /> Create story
       </h4>
+      <img style={{ height: 250 }} src={state.logoURL} />
       <Form
         onSubmit={(e) => {
           e.preventDefault();
           console.debug('submit', state);
-          const { topic, message, valid_until } = state;
+          const { topic, message, valid_until, logoURL } = state;
 
           onPost({
             type,
             title: topic || message,
             description: message,
-            valid_until: dayjs().add(valid_until, 'minute').toISOString(),
+            logoURL,
+            valid_until: '2100-01-01', // dayjs().add(valid_until, 'minute').toISOString(),
           });
         }}
       >
