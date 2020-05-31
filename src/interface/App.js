@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button } from './components/library';
-import './style/App.css';
 import NonCart from './noncart.js';
-
+import TakePicture from './takepicture.js'
+import './style/App.css';
 class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <NonCart
+        {/* <NonCart
           name="Great story"
           description={
             "I think these are interesting mechanisms for on one side making the non-zone experience more meaningful / special - and on the other side for us to monetize the platform in a fair way (basically is the same model of a Cloud Hosting platform - just, we 'host' non-zones, allowing users to create 'space')"
@@ -17,7 +17,10 @@ class App extends React.Component {
 		  }
 		  data={"12.12.2020"}
 		  author={"Sergey Rudenko"}
-        />
+        /> */}
+        
+		<TakePicture />
+
         <Button
           class={'app__login app__button--svg'}
           func={() => console.log('it works')}
