@@ -3,17 +3,20 @@ import { Button } from './components/library';
 import NonCreate from './nonCreate.js';
 import NonCart from './noncart.js';
 import TakePicture from './takepicture.js';
+import Point from './point.js'
 import './style/App.css';
 class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <NonCreate
+        {/* <NonCreate
           link={
             'https://leonardo.osnova.io/570cc994-bf84-0485-b393-0b92245a8158/-/resize/1200/'
           }
           func={(formOutput) => console.log(formOutput)}
-        />
+        /> */}
+
+		<Point name={"Old building"} coords={"13.23432.234"}/>
 
         <TakePicture />
 

@@ -1,0 +1,31 @@
+.point {
+	margin: 200px;
+	height: min-content;
+	width: max-content;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.point__name {
+	font-size: 20px;
+	color: white;
+	font-weight: 600;
+}
+
+.point__coords {
+	font-size: 15px;
+	color: #79CAB5;
+	opacity: 1;
+}
+
+.point__point {
+	width: 54px;
+	height: 50px;
+	background-size: cover;
+	margin-bottom: 5px;
+	background-image: url(../style/media/vortex.png);
+
+}
